@@ -16,7 +16,7 @@ namespace ILI9341Driver
         private readonly GpioPin _chipSelectPin;
 
         private readonly SpiDevice _spi;
-        private bool _isLandscape;
+        //private bool _isLandscape;
 
         private bool _backlightOn;
         public bool BacklightOn
@@ -70,9 +70,10 @@ namespace ILI9341Driver
             GpioPin dataCommandPin = null,
             GpioPin resetPin = null,
             GpioPin backlightPin = null,
-            int spiClockFrequency = 10000000,
-            SpiMode spiMode = SpiMode.Mode3,
-            string spiBus = "SPI1")
+            int spiClockFrequency = 10*1000*1000,
+            SpiMode spiMode = SpiMode.Mode0,
+            string spiBus = "SPI1",
+            DataBitOrder bitOrder = DataBitOrder.MSB)
         {
             if (chipSelectPin != null)
             {
@@ -110,7 +111,8 @@ namespace ILI9341Driver
             {
                 DataBitLength = 8,
                 ClockFrequency = spiClockFrequency,
-                Mode = spiMode
+                Mode = spiMode,
+                BitOrder = bitOrder
             };
 
             _spi = SpiDevice.FromId(spiBus, connectionSettings);
@@ -211,7 +213,7 @@ namespace ILI9341Driver
         {
             lock (this)
             {
-                _isLandscape = isLandscape;
+                //_isLandscape = isLandscape;
                 SendCommand(Commands.MemoryAccessControl);
 
                 if (isLandscape)
