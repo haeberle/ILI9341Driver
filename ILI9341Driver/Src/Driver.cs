@@ -65,15 +65,15 @@ namespace ILI9341Driver
 
         #region Constructors
 
+        [Obsolete("Constructor is deprecated, please use the other Contstructures instead.")]
         public ILI9341(bool isLandscape = false,
             GpioPin chipSelectPin = null,
             GpioPin dataCommandPin = null,
             GpioPin resetPin = null,
             GpioPin backlightPin = null,
-            int spiClockFrequency = 10*1000*1000,
+            int spiClockFrequency = 18*1000*1000,
             SpiMode spiMode = SpiMode.Mode0,
-            string spiBus = "SPI1",
-            DataBitOrder bitOrder = DataBitOrder.MSB)
+            string spiBus = "SPI1")
         {
             if (chipSelectPin != null)
             {
@@ -111,8 +111,7 @@ namespace ILI9341Driver
             {
                 DataBitLength = 8,
                 ClockFrequency = spiClockFrequency,
-                Mode = spiMode,
-                BitOrder = bitOrder
+                Mode = spiMode                
             };
 
             _spi = SpiDevice.FromId(spiBus, connectionSettings);
@@ -168,19 +167,19 @@ namespace ILI9341Driver
 
         #region Public Methods
 
-        public void FillScreen(int left, int right, int top, int bottom, ushort color)
+        public void DrawRect(int left, int right, int top, int bottom, Color565 color)
         {
             lock (this)
             {
                 SetWindow(left, right, top, bottom);
 
                 var buffer = new ushort[Width];
-
+                _spi.ConnectionSettings.DataBitLength = 16;
                 if (color != 0)
                 {
                     for (var i = 0; i < Width; i++)
                     {
-                        buffer[i] = color;
+                        buffer[i] = (ushort)color;
                     }
                 }
 
@@ -188,7 +187,15 @@ namespace ILI9341Driver
                 {
                     SendData(buffer);
                 }
+                _spi.ConnectionSettings.DataBitLength = 8;
+            }
+        }
 
+        public void FillScreen(Color565 color)
+        {
+            lock (this)
+            {
+                DrawRect(0, Width - 1, 0, Height - 1, color);
             }
         }
 
@@ -196,18 +203,18 @@ namespace ILI9341Driver
         {
             lock (this)
             {
-                FillScreen(0, Width - 1, 0, Height - 1, 0);
+                FillScreen(Color565.Black);
             }
         }
 
-        public void SetPixel(int x, int y, ushort color)
-        {
-            lock (this)
-            {
-                SetWindow(x, x, y, y);
-                SendData(color);
-            }
-        }
+        //public void SetPixel(int x, int y, Color565 color)
+        //{
+        //    lock (this)
+        //    {
+        //        SetWindow(x, x, y, y);
+        //        SendData((ushort)color);
+        //    }
+        //}
 
         public void SetOrientation(bool isLandscape)
         {
@@ -246,8 +253,6 @@ namespace ILI9341Driver
 
         #endregion Public Methods
 
-
-
         protected virtual void InitializeScreen()
         {
             lock (this)
@@ -258,6 +263,8 @@ namespace ILI9341Driver
                 SendCommand(Commands.SoftwareReset);
                 Thread.Sleep(10);
                 SendCommand(Commands.DisplayOff);
+
+                
 
                 SendCommand(Commands.MemoryAccessControl);
                 SendData(lcdPortraitConfig);
@@ -282,7 +289,7 @@ namespace ILI9341Driver
 
                 SendCommand(Commands.DisplayFunctionControl);
                 SendData(0x0A, 0x82, 0x27, 0x00);
-
+               
                 SendCommand(Commands.SleepOut);
                 Thread.Sleep(120);
 
@@ -293,10 +300,10 @@ namespace ILI9341Driver
             }
         }
 
-        public static ushort ColorFromRgb(byte r, byte g, byte b)
-        {
-            return (ushort)((r << 11) | (g << 5) | b);
-        }
+        //public static ushort ColorFromRgb(byte r, byte g, byte b)
+        //{
+        //    return (ushort)((r << 11) | (g << 5) | b);
+        //}
 
         public void SetWindow(int left, int right, int top, int bottom)
         {

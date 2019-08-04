@@ -133,6 +133,7 @@ namespace nanoIli9341.Sample
                     0x07F8, 0x07F8, 0x07F8, 0x07F8, 0x07F8, 0x07F8, 0x07F8, 0x07F8
                 };
 
+        
 
         public static void Main()
         {
@@ -182,32 +183,53 @@ namespace nanoIli9341.Sample
                spiBus: "SPI1",
                backlightPin: backlightPin);
 
-            var font = new StandardFixedWidthFont();
+            //var font = new StandardFixedWidthFont();
             tft.BacklightOn = true;
             tft.ClearScreen();
-            tft.DrawString(10, 10, "Hello world!", 0xF800, font);
+            //tft.DrawString(10, 10, "Hello world!", Color565.Aquamarine, font);
             //tft.BacklightOn = false;
             //tft.BacklightOn = true;
 
-            tft.Mosaic(10, 1000);
-            Thread.Sleep(1000);
-            tft.FlipBox();
+            //tft.Mosaic(10, 1000);
+            //tft.DisplayBoardInfo();
+            //Thread.Sleep(5000);
+            //tft.FlipBox();
+
+            //Thread.Sleep(1000);
+            //tft.LoadBitmap(1, 1, 20, 40, bmp);
+            //Thread.Sleep(1000);
+
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x0000ff));
             Thread.Sleep(1000);
 
-            tft.LoadBitmap(1, 1, 20, 40, bmp);
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xFF0000));
             Thread.Sleep(1000);
 
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x00FF00));
+            Thread.Sleep(1000);
 
-            var i = 0;
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xffff00));
+            Thread.Sleep(1000);
+
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xffffff));
+            Thread.Sleep(1000);
+
+            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x000000));
+            Thread.Sleep(1000);
+
+            //var i = 0;
             for (; ; )
             {
-                i = i > 100 ? 0 : i + 1;
-                //test.Write(GpioPinValue.Low);
-                //tft.BacklightOn = false;
-                //Thread.Sleep(500);
-                //test.Write(GpioPinValue.High);
-                //tft.BacklightOn = true;
-                tft.DrawString(10, 10, $"Hello world! + {i}", 0xF800, font);
+                //i = i > 100 ? 0 : i + 1;
+                ////test.Write(GpioPinValue.Low);
+                ////tft.BacklightOn = false;
+                ////Thread.Sleep(500);
+                ////test.Write(GpioPinValue.High);
+                ////tft.BacklightOn = true;
+                //tft.DrawString(10, 10, $"Hello world! + {i}", Color565.DarkKhaki, font);
+                tft.BacklightOn = true;
+                tft.ColorScreenTest();
+                tft.BacklightOn = false;
                 Thread.Sleep(500);
             }
 

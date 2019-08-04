@@ -7,12 +7,17 @@ namespace ILI9341Driver
 {
     public partial class ILI9341
     {
+        #region Variables
+        LCDSettings _lcdSettings;
+        #endregion
+
+        #region Constructor
         public ILI9341(LCDSettings lcdSettings,
            GpioPin chipSelectPin = null,
            GpioPin dataCommandPin = null,
            GpioPin resetPin = null,
            GpioPin backlightPin = null,
-           int spiClockFrequency = 10 * 1000 * 1000,
+           int spiClockFrequency = 18 * 1000 * 1000,
            SpiMode spiMode = SpiMode.Mode0,
            string spiBus = "SPI1")
         {
@@ -57,9 +62,12 @@ namespace ILI9341Driver
 
             _spi = SpiDevice.FromId(spiBus, connectionSettings);
             InitializeScreen();
+            _lcdSettings = lcdSettings;
             SetOrientation(lcdSettings);
         }
+        #endregion
 
+        #region Public Control Methods
 
         public void SetOrientation(LCDSettings lcdSettings)
         {
@@ -75,5 +83,6 @@ namespace ILI9341Driver
                 SetWindow(0, Width - 1, 0, Height - 1);
             }
         }
+        #endregion
     }
 }

@@ -14,14 +14,14 @@ namespace ILI9341Driver
             }
         }
 
-        public void DrawPixel(UInt16 x, UInt16 y, Color888 color)
-        {
-            lock (this)
-            {
-                SetWindow(x, x, y, y);
-                SendData((ushort)ColorConversion.ToRgb565(color));
-            }
-        }
+        //public void DrawPixel(UInt16 x, UInt16 y, Color888 color)
+        //{
+        //    lock (this)
+        //    {
+        //        SetWindow(x, x, y, y);
+        //        SendData((ushort)ColorConversion.ToRgb565(color));
+        //    }
+        //}
 
         public void SetPixel(int x, int y, Color565 color)
         {

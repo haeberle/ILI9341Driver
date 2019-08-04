@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ILI9341Driver
 {
-    public class LCDSettings
+    public abstract class LCDSettings
     {
 
         public LCDSettings(int height, int width)
@@ -51,7 +51,9 @@ namespace ILI9341Driver
             {
                 _orientation = value;
             }
-        }       
+        }
+
+        //public abstract uint ColorCodeConverter(Color color);
     }
 
     public class M5StackLCDSettings : LCDSettings
@@ -60,6 +62,16 @@ namespace ILI9341Driver
         {
 
         }
+
+        //public override uint ColorCodeConverter(Color color)
+        //{
+        //    UInt16 rgb = (UInt16)color;
+
+        //    int bits = (((rgb >> 19) & 0x1f) << 11) | (((rgb >> 10) & 0x3f) << 6) | (((rgb >> 3) & 0x1f));
+
+        //    return (uint)bits;
+        //}
+
         public const byte Portrait = 0xA8;     // 10101000 for M5Stack, was 0x48 = 01001000 for STM32F429I_DISCOVERY
         public const byte Landscape = 0x08;    // 00001000 for M5Stack, was 0xE8 = 11101000 for STM32F429I_DISCOVERY
         public const byte Portrait180 = 0x68;  // 01101000 for M5Stack, was 0x88 = 10001000 for STM32F429I_DISCOVERY
