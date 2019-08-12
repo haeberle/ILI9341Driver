@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ILI9341Driver
+namespace ILI9341Driver.Fonts
 {
     public class StandardFixedWidthFont : Font
     {

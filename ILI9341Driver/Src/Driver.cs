@@ -174,12 +174,37 @@ namespace ILI9341Driver
                 SetWindow(left, right, top, bottom);
 
                 var buffer = new ushort[Width];
-                _spi.ConnectionSettings.DataBitLength = 16;
+                _spi.ConnectionSettings.DataBitLength = 8;
                 if (color != 0)
                 {
                     for (var i = 0; i < Width; i++)
                     {
                         buffer[i] = (ushort)color;
+                    }
+                }
+
+                for (int y = 0; y < Height; y++)
+                {
+                    SendData(buffer);
+                }
+                _spi.ConnectionSettings.DataBitLength = 8;
+            }
+        }
+        public void DrawRect(int left, int right, int top, int bottom, byte r, byte g, byte b)
+        {
+            lock (this)
+            {
+                SetWindow(left, right, top, bottom);
+
+                var buffer = new byte[Width*3];
+                _spi.ConnectionSettings.DataBitLength = 23;
+                if (r != 0 || g != 0 || b != 0)
+                {
+                    for (var i = 0; i < Width*3; i = i+3)
+                    {
+                        buffer[i] = r;
+                        buffer[i+1] = g;
+                        buffer[i+2] = b;
                     }
                 }
 
@@ -264,13 +289,11 @@ namespace ILI9341Driver
                 Thread.Sleep(10);
                 SendCommand(Commands.DisplayOff);
 
-                
-
                 SendCommand(Commands.MemoryAccessControl);
                 SendData(lcdPortraitConfig);
 
                 SendCommand(Commands.PixelFormatSet);
-                SendData(0x55);//16-bits per pixel
+                SendData(0x66);//16-bits per pixel
 
                 SendCommand(Commands.FrameControlNormal);
                 SendData(0x00, 0x1B);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ILI9341Driver
+namespace ILI9341Driver.Generic
 {
     public abstract class LCDSettings
     {

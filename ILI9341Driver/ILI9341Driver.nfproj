@@ -18,21 +18,22 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="18Bit\Bitmap.cs" />
+    <Compile Include="18Bit\Color.cs" />
+    <Compile Include="18Bit\DrawChar.cs" />
+    <Compile Include="18Bit\DrawCircle.cs" />
+    <Compile Include="18Bit\DrawPixel.cs" />
+    <Compile Include="18Bit\DrawRect.cs" />
+    <Compile Include="18Bit\DrawString.cs" />
+    <Compile Include="18Bit\ILI9341Bit18.cs" />
+    <Compile Include="Generic\ILI9341.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Bitmap.cs" />
-    <Compile Include="Src\Color.cs" />
-    <Compile Include="Src\Commands.cs" />
-    <Compile Include="Src\Demo.cs" />
-    <Compile Include="Src\DrawChar.cs" />
-    <Compile Include="Src\DrawCircle.cs" />
-    <Compile Include="Src\DrawPixel.cs" />
-    <Compile Include="Src\DrawString.cs" />
-    <Compile Include="Src\Driver.cs" />
-    <Compile Include="Src\DriverExt.cs" />
-    <Compile Include="Src\Font.cs" />
-    <Compile Include="Src\FontCharacter.cs" />
-    <Compile Include="Src\LCDSettings.cs" />
-    <Compile Include="Src\StandardFixedWidthFont.cs" />
+    <Compile Include="Generic\Commands.cs" />
+    <Compile Include="18Bit\Demo.cs" />
+    <Compile Include="Fonts\Font.cs" />
+    <Compile Include="Fonts\FontCharacter.cs" />
+    <Compile Include="Generic\LCDSettings.cs" />
+    <Compile Include="Fonts\StandardFixedWidthFont.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=1.2.6.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">

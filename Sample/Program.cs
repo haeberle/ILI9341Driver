@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Net.NetworkInformation;
 using System.Threading;
-using ILI9341Driver;
+//using ILI9341Driver;
+using ILI9341Driver._18Bit;
+using ILI9341Driver.Generic;
 using nanoFramework.Hardware.Esp32;
 using Windows.Devices.Gpio;
 
@@ -176,64 +178,57 @@ namespace nanoIli9341.Sample
             //    spiBus: "SPI1",
             //    backlightPin: backlightPin);
 
-            var tft = new ILI9341(new M5StackLCDSettings() { Orientation = M5StackLCDSettings.Landscape },
+            var tft = new ILI9341Bit18(new M5StackLCDSettings() { Orientation = M5StackLCDSettings.Landscape },
                chipSelectPin: chipSelectPin,
                dataCommandPin: dataCommandPin,
                resetPin: resetPin,
                spiBus: "SPI1",
                backlightPin: backlightPin);
-
-            //var font = new StandardFixedWidthFont();
+          
             tft.BacklightOn = true;
             tft.ClearScreen();
-            //tft.DrawString(10, 10, "Hello world!", Color565.Aquamarine, font);
-            //tft.BacklightOn = false;
-            //tft.BacklightOn = true;
 
-            //tft.Mosaic(10, 1000);
-            //tft.DisplayBoardInfo();
-            //Thread.Sleep(5000);
-            //tft.FlipBox();
-
-            //Thread.Sleep(1000);
-            //tft.LoadBitmap(1, 1, 20, 40, bmp);
-            //Thread.Sleep(1000);
-
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x0000ff));
+            tft.DrawRect(10, 310, 10, 100, 0xFC, 0,0);
             Thread.Sleep(1000);
+            tft.DrawRect(10, 310, 10, 100, Color666.Red);
+            Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xFF0000));
-            Thread.Sleep(1000);
+            tft.DrawRect(10, 310, 10, 100, 0, 0xFC, 0);
+            Thread.Sleep(500);
+            tft.DrawRect(10, 310, 10, 100, Color666.Lime);
+            Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x00FF00));
-            Thread.Sleep(1000);
+            tft.DrawRect(10, 310, 10, 100,  0, 0, 0xFC);
+            Thread.Sleep(500);
+            tft.DrawRect(10, 310, 10, 100, Color666.Blue);
+            Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xffff00));
-            Thread.Sleep(1000);
+            tft.DrawRect(10, 310, 10, 100, 0x80, 0, 0x80); // purble    
+            Thread.Sleep(500);
+            tft.DrawRect(10, 310, 10, 100, Color666.Purple);
+            Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0xffffff));
-            Thread.Sleep(1000);
+            tft.DrawRect(10, 310, 10, 100, 0x80, 0x80, 0x80); // gray           
+            Thread.Sleep(500);
+            tft.DrawRect(10, 310, 10, 100, Color666.Gray);
+            Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, (Color565)ColorConverter.ToRgb565(0x000000));
-            Thread.Sleep(1000);
-
-            //var i = 0;
+            tft.DrawRect(10, 310, 10, 100, 0, 0, 0x80); // navy      
+            Thread.Sleep(500);
+            tft.DrawRect(10, 310, 10, 100, Color666.Navy);
+            Thread.Sleep(500);
+           
             for (; ; )
-            {
-                //i = i > 100 ? 0 : i + 1;
-                ////test.Write(GpioPinValue.Low);
-                ////tft.BacklightOn = false;
-                ////Thread.Sleep(500);
-                ////test.Write(GpioPinValue.High);
-                ////tft.BacklightOn = true;
-                //tft.DrawString(10, 10, $"Hello world! + {i}", Color565.DarkKhaki, font);
-                tft.BacklightOn = true;
+            {               
+                tft.DisplayBoardInfo();
+                Thread.Sleep(5000);
+                tft.ClearScreen();
                 tft.ColorScreenTest();
-                tft.BacklightOn = false;
                 Thread.Sleep(500);
-            }
-
-            //Thread.Sleep(Timeout.Infinite);            
+                tft.ClearScreen();
+                tft.Mosaic(10, 1000);
+                tft.ClearScreen();
+            }        
         }
     }
 }

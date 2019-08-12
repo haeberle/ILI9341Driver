@@ -1,4 +1,4 @@
-﻿namespace ILI9341Driver
+﻿namespace ILI9341Driver.Generic
 {
     public enum Commands
     {
