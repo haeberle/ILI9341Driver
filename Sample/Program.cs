@@ -203,9 +203,9 @@ namespace nanoIli9341.Sample
             tft.DrawRect(10, 310, 10, 100, Color666.Blue);
             Thread.Sleep(500);
 
-            tft.DrawRect(10, 310, 10, 100, 0x80, 0, 0x80); // purble    
+            tft.DrawRect(10, 310, 10, 100, 0xFC, 0xC0, 0xC8); // pink    
             Thread.Sleep(500);
-            tft.DrawRect(10, 310, 10, 100, Color666.Purple);
+            tft.DrawRect(10, 310, 10, 100, Color666.Pink);
             Thread.Sleep(500);
 
             tft.DrawRect(10, 310, 10, 100, 0x80, 0x80, 0x80); // gray           
